@@ -11,9 +11,10 @@ for account in $(cat ./aws_accounts.csv|tail -f -n +2); do
   if (($age < $cutoff))
   then
     echo "Warning! is older than 3 days";
-    echo $ACCOUNT_ID;
-    echo $PROFILEACCOUNT;
-    echo $SERIAL;
+    # echo $ACCOUNT_ID;
+    # echo $PROFILEACCOUNT;
+    # echo $SERIAL;
+    echo "$PROFILEACCOUNT TOKEN CODE:";
     read;
     TOKEN=$REPLY
     # TOKEN=$(\
