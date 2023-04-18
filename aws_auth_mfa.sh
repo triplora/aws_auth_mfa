@@ -1,6 +1,6 @@
 #!/bin/bash
 X=1;
-for account in $(cat ./aws_mfa_accounts.csv|tail -f -n +2); do
+for account in $(cat ./aws_accounts.csv|tail -f -n +2); do
   ACCOUNT_ID=$(echo $account| cut -d ';' -f1);
   PROFILEACCOUNT=$(echo $account| cut -d ';' -f2);
   SERIAL=$(echo $account| cut -d ';' -f3);
@@ -14,11 +14,13 @@ for account in $(cat ./aws_mfa_accounts.csv|tail -f -n +2); do
     echo $ACCOUNT_ID;
     echo $PROFILEACCOUNT;
     echo $SERIAL;
-    TOKEN=$(\
-      dialog --title "Digite o TOKEN" \
-            --inputbox "$PROFILEACCOUNT TOKEN CODE:" 8 40 \
-      3>&1 1>&2 2>&3 3>&- \
-    )
+    read;
+    TOKEN=$REPLY
+    # TOKEN=$(\
+    #   dialog --title "Digite o TOKEN" \
+    #         --inputbox "$PROFILEACCOUNT TOKEN CODE:" 8 40 \
+    #   3>&1 1>&2 2>&3 3>&- \
+    # )
     echo "$TOKEN"
 
     echo "Configuring $PROFILEACCOUNT with token $TOKEN"
@@ -34,7 +36,7 @@ for account in $(cat ./aws_mfa_accounts.csv|tail -f -n +2); do
     aws configure set aws_access_key_id $ACCESSKEY --profile $PROFILENAMEMFA
     aws configure set aws_secret_access_key $SECRETKEY --profile $PROFILENAMEMFA
     aws configure set aws_session_token $SESSIONTOKEN --profile $PROFILENAMEMFA
-    REPLACEEXPDATE=$X"s/;[^;]*$/;"$EXPIRATIONTOKEN"/ ./aws_mfa_accounts.csv";
+    REPLACEEXPDATE=$X"s/;[^;]*$/;"$EXPIRATIONTOKEN"/ ./aws_accounts.csv";
     EXEC=$(sed -i $REPLACEEXPDATE);
   else
     echo "$PROFILEACCOUNT vaĺido - $cutoff - $age";
