@@ -1,6 +1,6 @@
 #!/bin/bash
 X=1;
-for account in $(cat ./aws_accounts.csv|tail -f -n +2); do
+for account in $(cat ./aws_mfa_accounts.csv|tail -f -n +2); do
   ACCOUNT_ID=$(echo $account| cut -d ';' -f1);
   PROFILEACCOUNT=$(echo $account| cut -d ';' -f2);
   SERIAL=$(echo $account| cut -d ';' -f3);
