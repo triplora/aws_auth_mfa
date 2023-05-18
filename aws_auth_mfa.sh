@@ -37,7 +37,7 @@ for account in $(cat ./aws_mfa_accounts.csv|tail -f -n +2); do
     aws configure set aws_access_key_id $ACCESSKEY --profile $PROFILENAMEMFA
     aws configure set aws_secret_access_key $SECRETKEY --profile $PROFILENAMEMFA
     aws configure set aws_session_token $SESSIONTOKEN --profile $PROFILENAMEMFA
-    REPLACEEXPDATE=$X"s/;[^;]*$/;"$EXPIRATIONTOKEN"/ ./aws_accounts.csv";
+    REPLACEEXPDATE=$X"s/;[^;]*$/;"$EXPIRATIONTOKEN"/ ./aws_mfa_accounts.csv";
     EXEC=$(sed -i $REPLACEEXPDATE);
   else
     echo "$PROFILEACCOUNT vaĺido - $cutoff - $age";
